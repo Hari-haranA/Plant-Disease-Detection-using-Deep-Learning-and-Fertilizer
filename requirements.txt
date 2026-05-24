@@ -1,6 +1,6 @@
 Django==5.1.4
 Pillow==12.2.0
-scikit_learn==1.8.0
+scikit-learn==1.8.0
 torch==2.6.0
 torchvision==0.21.0
 gunicorn==26.0.0
