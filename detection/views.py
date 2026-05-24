@@ -7,20 +7,24 @@ from django.conf import settings
 from .forms import ImageUploadForm
 from PIL import Image
 import os
-import json
 import torch
 import torchvision.transforms as transforms
 import torch.nn as nn
 import torch.nn.functional as F
-from sklearn.metrics import accuracy_score as accuracy
+# from sklearn.metrics import accuracy_score as accuracy
 from django.core.files.storage import default_storage
 import uuid
+
+#for removing sklearn overkill deployment error
+def accuracy(outputs, labels):
+    _, preds = torch.max(outputs, dim=1)
+    return torch.tensor(torch.sum(preds == labels).item() / len(preds))
 
 # Define your model class again (same architecture as used during training)
 class ResNet9(nn.Module):
     def __init__(self, in_channels, num_diseases):
         super().__init__()
-        
+
         def ConvBlock(in_c, out_c, pool=False):
             layers = [nn.Conv2d(in_c, out_c, kernel_size=3, padding=1),
                       nn.BatchNorm2d(out_c),
@@ -28,15 +32,15 @@ class ResNet9(nn.Module):
             if pool:
                 layers.append(nn.MaxPool2d(4))
             return nn.Sequential(*layers)
-        
+
         self.conv1 = ConvBlock(in_channels, 64)
         self.conv2 = ConvBlock(64, 128, pool=True)
         self.res1 = nn.Sequential(ConvBlock(128, 128), ConvBlock(128, 128))
-        
+
         self.conv3 = ConvBlock(128, 256, pool=True)
         self.conv4 = ConvBlock(256, 512, pool=True)
         self.res2 = nn.Sequential(ConvBlock(512, 512), ConvBlock(512, 512))
-        
+
         self.classifier = nn.Sequential(nn.MaxPool2d(4),
                                        nn.Flatten(),
                                        nn.Linear(512, num_diseases))
@@ -179,7 +183,7 @@ def register_view(request):
         email = request.POST["email"]
         password = request.POST["password"]
         confirm_password = request.POST["confirm_password"]
-        
+
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
             return redirect("register")
@@ -219,16 +223,16 @@ def logout_view(request):
 @login_required
 def home_view(request):
     detection_result = None  # Default value for detection result
-    
+
     if request.method == 'POST' and 'image' in request.FILES:
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.cleaned_data['image']
             detection_result = detect_disease(image)  # Call your model for disease detection
-            
+
     else:
         form = ImageUploadForm()  # Create the form instance if not a POST request
-    
+
     return render(request, 'home.html', {'form': form, 'detection_result': detection_result})
 
 def detect_disease(image):
