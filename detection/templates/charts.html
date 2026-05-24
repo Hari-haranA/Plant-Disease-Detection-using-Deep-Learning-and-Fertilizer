@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance & Charts</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav li {
+            margin: 0 20px;
+        }
+        nav a {
+            font-weight: bolder;
+            color: white;
+            text-decoration: none;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        .chart-container {
+            width: 90%;
+            margin: auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background: #007BFF;
+            color: white;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .architecture {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        pre {
+            background: #222;
+            color: #fff;
+            padding: 15px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dataset, Performance & Charts Overview</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'performance' %}">Performance</a></li>
+                <li><a href="{% url 'charts' %}">Charts</a></li>
+                <li><a href="{% url 'logout' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+    <h2>Plant Disease Dataset Summary</h2>
+    <p style="text-align: center; font-size: 18px;">Total disease classes: <b>38</b></p>
+    <p style="text-align: center; font-size: 18px;">Total Training Images: <b>70,302</b></p>
+
+    <table>
+        <tr>
+            <th>Plant Disease</th>
+            <th>No. of Images</th>
+            <th>Plant Disease</th>
+            <th>No. of Images</th>
+        </tr>
+        <tr><td>Apple___Apple_scab</td><td>2016</td><td>Apple___Black_rot</td><td>1987</td></tr>
+        <tr><td>Apple___Cedar_apple_rust</td><td>1761</td><td>Apple___healthy</td><td>2008</td></tr>
+        <tr><td>Blueberry___healthy</td><td>1816</td><td>Cherry_(including_sour)___healthy</td><td>1827</td></tr>
+        <tr><td>Cherry_(including_sour)___Powdery_mildew</td><td>1684</td><td>Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot</td><td>1642</td></tr>
+        <tr><td>Corn_(maize)___Common_rust_</td><td>1907</td><td>Corn_(maize)___healthy</td><td>1859</td></tr>
+        <tr><td>Corn_(maize)___Northern_Leaf_Blight</td><td>1908</td><td>Grape___Black_rot</td><td>1888</td></tr>
+        <tr><td>Grape___Esca_(Black_Measles)</td><td>1920</td><td>Grape___healthy</td><td>1692</td></tr>
+        <tr><td>Grape___Leaf_blight_(Isariopsis_Leaf_Spot)</td><td>1723</td><td>Orange___Haunglongbing_(Citrus_greening)</td><td>2011</td></tr>
+        <tr><td>Peach___Bacterial_spot</td><td>1838</td><td>Peach___healthy</td><td>1728</td></tr>
+        <tr><td>Pepper,_bell___Bacterial_spot</td><td>1913</td><td>Pepper,_bell___healthy</td><td>1988</td></tr>
+        <tr><td>Potato___Early_blight</td><td>1939</td><td>Potato___healthy</td><td>1824</td></tr>
+        <tr><td>Potato___Late_blight</td><td>1939</td><td>Raspberry___healthy</td><td>1781</td></tr>
+        <tr><td>Soybean___healthy</td><td>2022</td><td>Squash___Powdery_mildew</td><td>1736</td></tr>
+        <tr><td>Strawberry___healthy</td><td>1824</td><td>Strawberry___Leaf_scorch</td><td>1774</td></tr>
+        <tr><td>Tomato___Bacterial_spot</td><td>1702</td><td>Tomato___Early_blight</td><td>1920</td></tr>
+        <tr><td>Tomato___healthy</td><td>1926</td><td>Tomato___Late_blight</td><td>1851</td></tr>
+        <tr><td>Tomato___Leaf_Mold</td><td>1882</td><td>Tomato___Septoria_leaf_spot</td><td>1745</td></tr>
+        <tr><td>Tomato___Spider_mites Two-spotted_spider_mite</td><td>1743</td><td>Tomato___Target_Spot</td><td>1827</td></tr>
+        <tr><td>Tomato___Tomato_mosaic_virus</td><td>1790</td><td>Tomato___Tomato_Yellow_Leaf_Curl_Virus</td><td>1961</td></tr>
+    </table>
+
+    <div class="image-container">
+        <h3>Images Per Class</h3>
+        <img src="{% static "bar_graph.png" %}" alt="Bar Graph of Images Per Class" width="900">
+    </div>
+
+    <div class="image-container">
+        <h3>First Batch of Training Images</h3>
+        <img src="{% static "training_batch.png" %}" alt="Training Batch Images" width="600">
+    </div>
+
+    <div class="architecture">
+        <h2>Model Architecture</h2>
+        <pre>
+Layer (type)               Output Shape         Param #
+================================================================
+Conv2d-1                   [-1, 64, 256, 256]    1,792
+BatchNorm2d-2              [-1, 64, 256, 256]    128
+ReLU-3                     [-1, 64, 256, 256]    0
+Conv2d-4                   [-1, 128, 256, 256]   73,856
+BatchNorm2d-5              [-1, 128, 256, 256]   256
+ReLU-6                     [-1, 128, 256, 256]   0
+MaxPool2d-7                [-1, 128, 64, 64]     0
+Conv2d-8                   [-1, 128, 64, 64]     147,584
+BatchNorm2d-9              [-1, 128, 64, 64]     256
+ReLU-10                    [-1, 128, 64, 64]     0
+Conv2d-11                  [-1, 128, 64, 64]     147,584
+BatchNorm2d-12             [-1, 128, 64, 64]     256
+ReLU-13                    [-1, 128, 64, 64]     0
+MaxPool2d-17               [-1, 256, 16, 16]     0
+Conv2d-18                  [-1, 512, 16, 16]     1,180,160
+BatchNorm2d-19             [-1, 512, 16, 16]     1,024
+ReLU-20                    [-1, 512, 16, 16]     0
+MaxPool2d-21               [-1, 512, 4, 4]       0
+Conv2d-22                  [-1, 512, 4, 4]       2,359,808
+BatchNorm2d-23             [-1, 512, 4, 4]       1,024
+ReLU-24                    [-1, 512, 4, 4]       0
+MaxPool2d-28               [-1, 512, 1, 1]       0
+Flatten-29                 [-1, 512]             0
+Linear-30                  [-1, 38]              19,494
+================================================================
+Total params: 6,589,734
+Trainable params: 6,589,734
+Non-trainable params: 0
+Estimated Total Size (MB): 369.83
+        </pre>
+    </div>
+
+
+        <h2>Performance Plots</h2>
+        <div class="chart-container">
+            <p><strong>Validation Accuracy Over Epochs</strong></p>
+            <img src="{% static 'validation_accuracy.png' %}" alt="Validation Accuracy Chart">
+            
+            <p><strong>Validation Loss Over Epochs</strong></p>
+            <img src="{% static 'validation_loss.png' %}" alt="Validation Loss Chart">
+            
+            <p><strong>Learning Rate Over Time</strong></p>
+            <img src="{% static 'learning_rate.png' %}" alt="Learning Rate Chart">
+        </div>
+
+
+    </main>
+</body>
+</html>

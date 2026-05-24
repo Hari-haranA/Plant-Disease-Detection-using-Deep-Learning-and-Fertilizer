@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Plant Disease Detection</title>
+  <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-image: url('{% static 'plant.jpeg' %}');
+      background-size: cover;
+      background-position: center;
+      border-radius: 5px;
+      padding: 40px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+    h2 {
+      color: white;
+      margin-bottom: 30px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="color:black;">Register Now</h2>
+    <p><strong>Plant Disease Detection and Fertilizer Recommendation</strong></p>
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+    <li style="color: red; font-weight:bold;">{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Username" required><br>
+      <input type="email" name="email" placeholder="Email" required><br>
+      <input type="password" name="password" placeholder="Password" required><br>
+      <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <p style="color: white; font-size: 14px; margin-top: 10px;">Already have an account? <a href="{% url 'login' %}" style="color: yellow; font-weight:bold;">Login here</a></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Analysis</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav li {
+            margin: 0 20px;
+        }
+        
+        nav a {
+            font-weight: bolder;
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+        
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metrics {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        } 
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Performance Analysis</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'performance' %}">Performance</a></li>
+                <li><a href="{% url 'charts' %}">Charts</a></li>
+                <li><a href="{% url 'logout' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Plant Disease Classification Using ResNet</h2>
+            <p style="text-align:left;"><strong>DataSet: </strong>The dataset consists of 70K RGB images of healthy and diseased crop leaves categorized into 38 different classes. Below are some performance metrics and visual representations.</p>
+            
+            <h3 style="text-align:left;">Performance Metrics</h3>
+             <div style="text-align:left; ">
+               <p style="color: red;">Training Loss: 0.7457 → 0.1268</p>
+               <p style="color: red;">Validation Loss: 0.4343 → 0.0258</p>
+               <p style="color: green; ">Validation Accuracy: 86.44% → 99.28%</p>
+               <p style="color: blue;">Training Time: 19min 26s</p>
+            </div>
+
+            <h3 style="text-align:center;">ResNet Model Architecture - Summary</h3>
+            <p>ResNet (Residual Network) is a deep learning model designed to overcome vanishing gradient issues, allowing training of very deep neural networks. It introduces residual connections, enabling information to bypass layers, improving accuracy and convergence.</p>
+            
+            <h3 style="text-align:left;">Key Features of ResNet</h3>
+            <ul style="text-align:left;">
+             <li><strong>Residual Blocks:</strong> Each layer feeds into the next and also connects to layers 2-3 hops away.</li>
+              <li><strong>Batch Normalization & ReLU:</strong> Enhance training speed and stability.</li>
+              <li><strong>Max Pooling:</strong> Reduces spatial dimensions while preserving key features.</li>
+              <li><strong>Deep Convolutional Layers:</strong> Extract hierarchical features from input images.</li>
+            </ul>
+
+            <h3 style="text-align:left;">Why ResNet?</h3>
+            <ul style="text-align:left;">
+                <li>Prevents overfitting.</li>
+                <li>Avoids vanishing gradient problems.</li>
+                 <li>Enables training of very deep networks.</li>
+            </ul>
+
+            <h3 style="text-align:left;">The ResNet9 Architecture Consists of:</h3>
+            <ul style="text-align:left;">
+             <li><strong>Convolutional Layers:</strong> Extracting features.</li>
+             <li><strong>Residual Blocks:</strong> Enhancing gradient flow.</li>
+             <li><strong>Fully Connected Layer:</strong> Classifying images into 38 categories.</li>
+            </ul>
+
+            <p>This architecture ensures efficient and accurate image classification, making it ideal for <strong>plant disease detection</strong>. 🚀</p>
+           
+            <h3>Conclusion</h3>
+            <p>ResNets perform significantly well for image classification when some of the parameters are tweaked and techniques like scheduling learning rate, gradient clipping and weight decay are applied. The model is able to predict every image in test set perfectly without any errors !!!!</p>
+        </div>
+    </main>
+</body>
+</html>

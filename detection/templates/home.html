@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection Using Deep Learning and Fertilizer Recommendation</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 20px;
+        }
+
+        nav a {
+            font-weight: bolder;
+            color: white;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            font-weight: bolder;
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .logout-btn {
+            color: darkslategray;
+            margin-left: 20px; 
+        }
+
+        .logout-btn i {
+            margin-right: 5px;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .image-preview {
+            width: 250px;
+            height: 250px;
+            border: 1px solid #ccc;
+            margin: 20px auto;
+            overflow: hidden;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        select, input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Plant Disease Detection Using Deep Learning and Fertilizer Recommendation</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'performance' %}">Performance Analysis</a></li>
+                <li><a href="{% url 'charts' %}">Charts</a></li>
+                <li><a href="{% url 'logout' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <h2>Upload Image</h2>
+        <p>Upload an image of a plant leaf to detect the crop details, disease, and fertilizer recommendation.</p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="image">Choose an Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            
+            <div class="image-preview" id="preview-container">
+                <img id="preview" src="#" alt="Image Preview">
+            </div>
+            <button type="submit">Detect</button>
+        </form>
+        
+        {% if detection_result %}
+            <h2>Detection Results</h2>
+            <div class="image-preview1">
+                <img src="{{ detection_result.preview }}" alt="Detected Image" style="max-width: 300px; border: 2px solid grey;">
+            </div>
+            <div style="padding:50px; padding-left:100px; text-align: left;">
+            <p style="color: Blue; "><strong>Deep Learning Model Used For Prdiction: Residual Networks (ResNet)</strong></p>
+            <p style="color: Green; "><strong>Crop Name:</strong> {{ detection_result.crop_name }}</p>
+            <p style="color: Green; "><strong>Crop Details:</strong> {{ detection_result.crop_details }}</p>
+            <p style="color: red; font-weight:bold;"><strong>Predicted Disease Name:</strong> {{ detection_result.predicted_disease }}</p>
+            <p style="color: Orange;"><strong>Fertilizer Recommendation:</strong> {{ detection_result.fertilizer_recommendation }}</p>
+            </div>
+        {% endif %}
+        
+   
+    </main>
+    
+
+    <script>
+        const imageInput = document.getElementById('image');
+        const previewContainer = document.getElementById('preview-container');
+        const imagePreview = document.getElementById('preview');
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.style.display = 'block'; 
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.display = 'none'; 
+            }
+        });
+    </script>
+</body>
+</html>
